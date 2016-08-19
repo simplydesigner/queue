@@ -53,10 +53,10 @@ public:
         }
     }
     
-    auto push(T new_value) -> void
+    template <typename U>
+    auto push(U && new_value) -> void
     {
-//        std::cout << __PRETTY_FUNCTION__ << std::endl;
-        std::unique_ptr<node> p { new node(std::move(new_value)) };
+        std::unique_ptr<node> p { new node(new_value) };
         auto const new_tail = p.get();
         
         if ( m_tail ) {
@@ -73,7 +73,9 @@ private:
     {
         T data;
         std::unique_ptr<node> next;
-        node(T p_data) : data(std::move(p_data))
+        
+        template <typename U>
+        node(U && p_data) : data(p_data)
         {
 //            std::cout << __PRETTY_FUNCTION__ << std::endl;
         }
@@ -86,6 +88,7 @@ int main(int argc, const char * argv[]) {
     
     
     queue<foo> q;
+    
     
     q.push(5);
     
