@@ -30,6 +30,12 @@ struct foo
     }
 };
 
+auto operator <<(std::ostream & stream, foo const & object) -> std::ostream &
+{
+    stream << object.m_value;
+    return stream;
+}
+
 template <typename T>
 class queue
 {
@@ -91,6 +97,7 @@ int main(int argc, const char * argv[]) {
     
     
     q.push(5);
+    std::cout << *(q.try_pop().get()) << std::endl;
     
     return 0;
 }
